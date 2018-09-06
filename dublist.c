@@ -1,66 +1,58 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "dublist.h"
 
 #define BUFFERSIZE 128
 
-// Struct containing the relevant information that we care about.
-typedef struct mp3 {
-    char *artist;
-    char *title;
-    char *date;
-    int *runtime;
-    struct node *prev;
-    struct node *next;
-} mp3_t;
 
 // Allocates a new node with the given parameters. It becomes the head if
 // there is none, and is added to the end of the list otherwise.
-void add(char[] artist, char[] title, char[] date, int runtime,
-      struct mp3 *head, struct mp3 *tail) {
-    struct node *temp;
-    temp = (struct mp3*)malloc(sizeof(struct mp3));
+void add(char *artist, char *title, char *date, int runtime, dlist *dl) {
+    mp3 *temp;
+    temp = (mp3*)malloc(sizeof(mp3));
     temp->artist = artist;
     temp->title = title;
     temp->date = date;
-    temp->runtime = runtime;
-    if (head == NULL) {
-      head = temp;
-      tail = temp;
-      head->next=NULL;
-      head->prev=NULL;
+    temp->runtime = &runtime;
+    if (dl->head == NULL) {
+      dl->head = temp;
+      dl->tail = temp;
+      temp->next=NULL;
+      temp->prev=NULL;
     } else {
-      tail->next = temp;
-      temp->prev = tail;
-      tail = temp;
+      dl->tail->next = temp;
+      temp->prev = dl->tail;
+      dl->tail = temp;
     }
+	printf("%s",head->title);
 }
 
 // Deletes all nodes with the given artist's name
-int delete(char[] artist, struct mp3 *head, struct mp3 *tail) {
+int delete(char *artist, dlist *dl) {
     int deletions = 0;
-    struct node *temp, *prev, *next;
-    temp = head;
+    mp3 *temp;
+    temp = dl->head;
     while (temp != NULL) {
       if (strcmp(temp->artist, artist)) {
-        if (temp == head) {
-          head = temp->next;
+        if (temp == dl->head) {
+          dl->head = temp->next;
           free(temp);
-          head->prev = NULL;
+          dl->head->prev = NULL;
           deletions++;
-        } else if (temp == tail) {
-            tail = temp->prev;
-            free(temp);
-            tail->next = NULL;
-          }
         } else {
-          prev->next = temp->next;
-          temp->prev = prev;
-          free(temp);
-          deletions++;
-        }
+		if (temp == dl->tail) {
+		   dl->tail = temp->prev;
+  		   free(temp);
+       		   dl->tail->next = NULL;
+       		 } else {
+         	 temp->prev->next = temp->next;
+         	 temp->next->prev = temp->prev;
+         	 free(temp);
+          	deletions++;
+        	}
+	}
       } else {
-        prev = temp;
         temp = temp->next;
       }
     }
@@ -68,29 +60,29 @@ int delete(char[] artist, struct mp3 *head, struct mp3 *tail) {
 }
 
 // Prints out the list in forward order.
-void printForward(struct mp3 *r) {
-    r = head;
-    if (r == NULL) {
+void printForward(dlist *dl) {
+	mp3 *temp = dl->head;
+    if (temp == NULL) {
       return;
     }
-    while (r != NULL) {
+    while (temp != NULL) {
       printf("%s by %s from %s, %d seconds long.\n",
-        r->title,r->artist,r->date,r->runtime);
-      r=r->next;
+        temp->title,temp->artist,temp->date,*(temp->runtime));
+      temp=temp->next;
     }
     printf("\n");
 }
 
 // Prints out the list in reverse order.
-void printRearward(struct mp3 *r) {
-    r = tail;
-    if (r == NULL) {
+void printRearward(dlist *dl) {
+	mp3 *temp = dl->tail; 
+   if (temp == NULL) {
       return;
     }
-    while (r != NULL) {
+    while (temp != NULL) {
       printf("%s by %s from %s, %d seconds long.\n",
-        r->title,r->artist,r->date,r->runtime);
-      r=r->prev;
+        temp->title,temp->artist,temp->date,*(temp->runtime));
+      temp=temp->prev;
     }
     printf("\n");
 }
@@ -101,10 +93,10 @@ void printRearward(struct mp3 *r) {
 // as our current node.
 int  main() {
     int i, runtime;
-    char[BUFFERSIZE] artist;
-    char[BUFFERSIZE] title;
-    char[BUFFERSIZE] date;
-    struct mp3 *mp3, *head, *tail;
+    char artist[BUFFERSIZE];
+    char title[BUFFERSIZE];
+    char date[BUFFERSIZE];
+    dlist dl = (dlist*)malloc(sizeof(dlist));
     head = NULL;
     tail = NULL;
     while (1) {
@@ -123,13 +115,13 @@ int  main() {
       {
         case 1:
                  printf("Enter the title of the track : ");
-                 scanf("%d",&title);
+                 scanf("%s",title);
                  printf("Enter the artist's name : ");
-                 scanf("%s",&artist);
+                 scanf("%s",artist);
                  printf("Enter the date of song : ");
-                 scanf("%s",&date);
+                 scanf("%s",date);
                  printf("Enter the runtime of the song : ");
-                 scanf("%s",&title);
+                 scanf("%s",title);
                  add(artist, title, date, runtime, head, tail);
                  break;
         case 2:
@@ -144,11 +136,10 @@ int  main() {
                 if (head == NULL)
                   printf("List is Empty\n");
                 else {
-                  printf("Enter the Artist whose tracks
-                    you wish to delete : ");
-                  scanf("%s",&artist);
-                printf("deleted %d tracks successfully\n",
-                  delete(artist, head, tail);
+                  printf("Enter the Artist whose tracks you wish to delete : ");
+                  scanf("%s",artist);
+                printf("deleted %d tracks successfully\n", delete(artist, head, tail));
+		}
                 break;
         case 4:
                 return 0;
