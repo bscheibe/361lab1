@@ -116,19 +116,19 @@ int  main() {
 		 getchar();
                  if(fgets(buffer, BUFFERSIZE, stdin) != NULL) {
 		  len = (int)strlen(buffer);
-		  buffer[len-1] = '\0'
+		  buffer[len-1] = '\0';
 		  strcpy(title,buffer);
 		 }
                  printf("Enter the artist's name : ");
                  if(fgets(artist, BUFFERSIZE, stdin) != NULL) {
 		  len = (int)strlen(buffer);
-		  buffer[len-1] = '\0'
+		  buffer[len-1] = '\0';
 		  strcpy(artist,buffer);
 		 }
                  printf("Enter the date of song : ");
                  if(fgets(date, BUFFERSIZE, stdin) != NULL) {
 		  len = (int)strlen(buffer);
-		  buffer[len-1] = '\0'
+		  buffer[len-1] = '\0';
 		  strcpy(date,buffer);
 		 }
                  printf("Enter the runtime of the song : ");
