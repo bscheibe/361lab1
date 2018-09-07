@@ -7,7 +7,6 @@
 void add(char *artist, char *title, char *date, int runtime, dlist *dl) {
 	mp3* temp = (mp3*)malloc(sizeof(mp3));
     if (dl->head == NULL) {
-	printf("nulled");
       dl->head = temp;
       dl->tail = temp;
       dl->head->next = NULL;
@@ -92,6 +91,7 @@ void printRearward(dlist *dl) {
 // as our current node.
 int  main() {
     int i, runtime, len;
+    char buffer[BUFFERSIZE];
     char artist[BUFFERSIZE];
     char artistdel[BUFFERSIZE];
     char title[BUFFERSIZE];
@@ -112,10 +112,12 @@ int  main() {
         switch(i)
       {
         case 1:
-                 printf("Enter the title of the track : ");
-                 if(fgets(title, BUFFERSIZE, stdin) != NULL) {
-		  len = (int)strlen(title);
-		  title[len-1] = '\0';
+                 printf("Enter the title of the track :");
+		 getchar();
+                 if(fgets(buffer, BUFFERSIZE, stdin) != NULL) {
+		  len = (int)strlen(buffer);
+		  buffer[len-1] = '\0'
+		  strcpy(title,buffer);
 		 }
                  printf("Enter the artist's name : ");
                  if(fgets(artist, BUFFERSIZE, stdin) != NULL) {
@@ -125,7 +127,7 @@ int  main() {
                  printf("Enter the date of song : ");
                  if(fgets(date, BUFFERSIZE, stdin) != NULL) {
 		  len = (int)strlen(title);
-		  date[len-1] = '\0';
+		  date[len+1] = '\0';
 		 }
                  printf("Enter the runtime of the song : ");
                  scanf("%d" ,&runtime);
