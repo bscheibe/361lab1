@@ -139,7 +139,10 @@ int  main() {
                   printf("List is Empty\n");
                 else {
                   printf("Enter the Artist whose tracks you wish to delete : ");
-                  scanf("%s",artistdel);
+                  if(fgets(artistdel, BUFFERSIZE, stdin) != NULL) {
+		  len = (int)strlen(title);
+		  artistdel[len-1] = '\0';
+		 }
                 printf("deleted %d tracks successfully\n", del(artistdel, dl));
 		}
                 break;
