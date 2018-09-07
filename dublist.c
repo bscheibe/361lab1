@@ -121,13 +121,15 @@ int  main() {
 		 }
                  printf("Enter the artist's name : ");
                  if(fgets(artist, BUFFERSIZE, stdin) != NULL) {
-		  len = (int)strlen(artist);
-		  title[len-1] = '\0';
+		  len = (int)strlen(buffer);
+		  buffer[len-1] = '\0'
+		  strcpy(artist,buffer);
 		 }
                  printf("Enter the date of song : ");
                  if(fgets(date, BUFFERSIZE, stdin) != NULL) {
-		  len = (int)strlen(title);
-		  date[len+1] = '\0';
+		  len = (int)strlen(buffer);
+		  buffer[len-1] = '\0'
+		  strcpy(date,buffer);
 		 }
                  printf("Enter the runtime of the song : ");
                  scanf("%d" ,&runtime);
