@@ -113,14 +113,20 @@ int  main() {
       {
         case 1:
                  printf("Enter the title of the track : ");
-                if(fgets(title, BUFFERSIZE, stdin) != NULL) {
-		 len = (int)strlen(title);
-		 title[len-1] = '\0';
+                 if(fgets(title, BUFFERSIZE, stdin) != NULL) {
+		  len = (int)strlen(title);
+		  title[len-1] = '\0';
 		 }
                  printf("Enter the artist's name : ");
-                 fgets(artist, BUFFERSIZE, stdin);
+                 if(fgets(artist, BUFFERSIZE, stdin) != NULL) {
+		  len = (int)strlen(artist);
+		  title[len-1] = '\0';
+		 }
                  printf("Enter the date of song : ");
-                 fgets(date,BUFFERSIZE, stdin);
+                 if(fgets(date, BUFFERSIZE, stdin) != NULL) {
+		  len = (int)strlen(title);
+		  date[len-1] = '\0';
+		 }
                  printf("Enter the runtime of the song : ");
                  scanf("%d" ,&runtime);
                  add(artist, title, date, runtime, dl);
