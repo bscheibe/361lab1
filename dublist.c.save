@@ -1,3 +1,5 @@
+
+
 #include "dublist.h"
 #define BUFFERSIZE 128
 
@@ -113,10 +115,8 @@ int  main() {
       {
         case 1:
                  printf("Enter the title of the track : ");
-                if(fgets(title, BUFFERSIZE, stdin) != NULL) {
-		 len = (int)strlen(title);
-		 title[len-1] = '\0';
-		 }
+                 if (fgets(title, BUFFERSIZE, stdin);
+		 
                  printf("Enter the artist's name : ");
                  fgets(artist, BUFFERSIZE, stdin);
                  printf("Enter the date of song : ");

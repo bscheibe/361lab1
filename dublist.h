@@ -5,10 +5,10 @@
 #ifndef MP3_T
 #define MP3_T
 
-struct mp3_t;
+struct mp3;
 struct dlist;
 // Struct containing information about songs. 
-typedef struct mp3_t {
+typedef struct mp3 {
 	char *artist;
 	char *title;
 	char *date;
@@ -17,13 +17,13 @@ typedef struct mp3_t {
 	struct mp3 *next;
 } mp3;
 
-#endif
-
 // Doubly linked list pointer for the mp3 struct.
 typedef struct dlist_t {
 	mp3 *head;
 	mp3 *tail;
 } dlist;
+
+#endif
 
 // add an mp3 to the end of the list.
 void add(char *artist, char *title, char *date, int runtime, dlist *dl);
@@ -37,4 +37,3 @@ void printForward(dlist *dl);
 // print the list, back to front. 
 void printRearward(dlist *dl);
 
-#endif
