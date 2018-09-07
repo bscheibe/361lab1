@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "dublist.h"
-
 #define BUFFERSIZE 128
 
 
@@ -122,26 +118,33 @@ int  main() {
                  scanf("%s",date);
                  printf("Enter the runtime of the song : ");
                  scanf("%s",title);
-                 add(artist, title, date, runtime, head, tail);
+                 add(artist, title, date, runtime, dl);
                  break;
         case 2:
-                if (head == NULL) {
+                if (dl->head == NULL) {
                   printf("List is Empty\n");
                 } else {
                   printf("Song(s) in the list are : ");
                 }
-                printForward(head);
+                printForward(dl);
                 break;
         case 3:
-                if (head == NULL)
+                if (dl->head == NULL)
                   printf("List is Empty\n");
                 else {
                   printf("Enter the Artist whose tracks you wish to delete : ");
                   scanf("%s",artist);
-                printf("deleted %d tracks successfully\n", delete(artist, head, tail));
+                printf("deleted %d tracks successfully\n", delete(artist, dl));
 		}
                 break;
         case 4:
+		temp = dl->head;
+		deletingNode = temp->next;
+		while (temp != NULL) {
+			temp = temp->next;
+			free(deletingNode);
+		}
+		free(dl);
                 return 0;
         default:
                 printf("Invalid option\n");
