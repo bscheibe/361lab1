@@ -120,13 +120,13 @@ int  main() {
 		  strcpy(title,buffer);
 		 }
                  printf("Enter the artist's name : ");
-                 if(fgets(artist, BUFFERSIZE, stdin) != NULL) {
+                 if(fgets(buffer, BUFFERSIZE, stdin) != NULL) {
 		  len = (int)strlen(buffer);
 		  buffer[len-1] = '\0';
 		  strcpy(artist,buffer);
 		 }
                  printf("Enter the date of song : ");
-                 if(fgets(date, BUFFERSIZE, stdin) != NULL) {
+                 if(fgets(buffer, BUFFERSIZE, stdin) != NULL) {
 		  len = (int)strlen(buffer);
 		  buffer[len-1] = '\0';
 		  strcpy(date,buffer);
@@ -143,9 +143,10 @@ int  main() {
                   printf("List is Empty\n");
                 else {
                   printf("Enter the Artist whose tracks you wish to delete : ");
-                  if(fgets(artistdel, BUFFERSIZE, stdin) != NULL) {
-		  len = (int)strlen(title);
-		  artistdel[len-1] = '\0';
+                  if(fgets(buffer, BUFFERSIZE, stdin) != NULL) {
+		  len = (int)strlen(buffer);
+		  buffer[len-1] = '\0';
+		  strcpy(artistdel,buffer);
 		 }
                 printf("deleted %d tracks successfully\n", del(artistdel, dl));
 		}
