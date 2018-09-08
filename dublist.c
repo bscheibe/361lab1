@@ -37,12 +37,18 @@ int del(char *artist, dlist *dl) {
 	  if (dl->head->next == NULL) { //in case there is no following node
 	   dl->head = NULL;
            dl->tail = NULL;
+	   free(temp->artist);
+	   free(temp->title);
+	   free(temp->date);
 	   free(temp);
 	   deletions++;
 	   break; 
           }
 	  deletion = dl->head;
           dl->head = dl->head->next;
+	  free(deletion->artist);
+	  free(deletion->title);
+	  free(deletion->date);
           free(deletion);
           temp = dl->head;
           temp->prev = NULL;
@@ -50,7 +56,10 @@ int del(char *artist, dlist *dl) {
         } else {
 		if (temp == dl->tail) { //deleting the tail node
 		   dl->tail = temp->prev;
-  		   free(temp);
+  		   free(temp->artist);
+	  	   free(temp->title);
+	  	   free(temp->date);
+          	   free(temp);
        		   dl->tail->next = NULL;
 		   deletions++;
 		   break;
@@ -59,7 +68,10 @@ int del(char *artist, dlist *dl) {
          	 temp->next->prev = temp->prev;
          	 deletion = temp;
                  temp = temp->next;
-                 free(deletion);
+                 free(deletion->artist);
+	         free(deletion->title);
+	  	 free(deletion->date);
+         	 free(deletion);
           	 deletions++;
                  continue;
         	 }
@@ -112,6 +124,7 @@ int  main() {
     char title[BUFFERSIZE];
     char date[BUFFERSIZE];
     dlist* dl = (dlist*)malloc(sizeof(mp3));
+    mp3 *temp = (mp3*)malloc(sizeof(mp3));
     while (1) {
       printf("\nList Operations\n");
       printf("===============\n");
@@ -175,5 +188,11 @@ int  main() {
         }
       }
     }
+    while (dl->head != NULL) {
+	  temp = dl->head;
+	  free(dl->head->artist);
+	  free(dl->head->title);
+	  free(dl->head->date);
+          free(temp);
     return 0;
 }
