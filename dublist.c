@@ -29,29 +29,44 @@ void add(char *artist, char *title, char *date, int runtime, dlist *dl) {
 int del(char *artist, dlist *dl) {
     int deletions = 0;
     mp3 *temp = (mp3*)malloc(sizeof(mp3));
+    mp3 *deletion = (mp3*)malloc(sizeof(mp3));
     temp = dl->head;
     while (temp != NULL) {
-      if (strcmp(temp->artist, artist)) {
+       if (!strcmp(temp->artist, artist)) {
         if (temp == dl->head) { //deleting the first node
+	  if (dl->head->next == NULL) { //in case there is no following node
+	   dl->head = NULL;
+           dl->tail = NULL;
+	   free(temp);
+	   deletions++;
+	   break; 
+          }
+	  deletion = dl->head;
           dl->head = dl->head->next;
-          free(temp);
-          dl->head->prev = NULL;
+          free(deletion);
+          temp = dl->head;
+          temp->prev = NULL;
           deletions++;
         } else {
 		if (temp == dl->tail) { //deleting the tail node
 		   dl->tail = temp->prev;
   		   free(temp);
        		   dl->tail->next = NULL;
+		   deletions++;
+		   break;
        		 } else { //delete a middle node
          	 temp->prev->next = temp->next;
          	 temp->next->prev = temp->prev;
-         	 free(temp);
-          	deletions++;
-        	}
+         	 deletion = temp;
+                 temp = temp->next;
+                 free(deletion);
+          	 deletions++;
+                 continue;
+        	 }
 	}
       } else { // does not match
-        temp = temp->next;
-      }
+      temp = temp->next;
+     }
     }
     return deletions;
 }
@@ -142,13 +157,14 @@ int  main() {
                 if (dl->head == NULL)
                   printf("List is Empty\n");
                 else {
+		  getchar();
                   printf("Enter the Artist whose tracks you wish to delete : ");
                   if(fgets(buffer, BUFFERSIZE, stdin) != NULL) {
 		  len = (int)strlen(buffer);
 		  buffer[len-1] = '\0';
 		  strcpy(artistdel,buffer);
 		 }
-                printf("deleted %d tracks successfully\n", del(artistdel, dl));
+                printf("deleted %d track(s) successfully\n", del(artistdel, dl));
 		}
                 break;
         case 4:
