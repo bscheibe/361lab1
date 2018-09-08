@@ -124,14 +124,15 @@ int  main() {
     char title[BUFFERSIZE];
     char date[BUFFERSIZE];
     dlist* dl = (dlist*)malloc(sizeof(mp3));
-    mp3 *temp = (mp3*)malloc(sizeof(mp3));
+    mp3 *hold;
     while (1) {
       printf("\nList Operations\n");
       printf("===============\n");
       printf("1.Insert\n");
-      printf("2.Display\n");
-      printf("3.Delete\n");
-      printf("4.Exit\n");
+      printf("2.Display forward order\n");
+      printf("3.Display reverse order\n");
+      printf("4.Delete\n");
+      printf("5.Exit\n");
       printf("Enter your choice : ");
       if (scanf("%d",&i) <= 0) {
         printf("Enter only an Integer\n");
@@ -166,7 +167,10 @@ int  main() {
         case 2:
                 printForward(dl);
                 break;
-        case 3:
+	case 3:
+		printRearward(dl);
+		break;
+        case 4:
                 if (dl->head == NULL)
                   printf("List is Empty\n");
                 else {
@@ -180,16 +184,17 @@ int  main() {
                 printf("deleted %d track(s) successfully\n", del(artistdel, dl));
 		}
                 break;
-        case 4:
+        case 5:
                 while (dl->head != NULL) {
-	  	temp = dl->head;
+	  	hold = dl->head;
 	 	free(dl->head->artist);
 	 	free(dl->head->title);
 		free(dl->head->date);
        	  	dl->head = dl->head->next;
-       	  	free(temp);
-    }
-    free(dl);
+       	  	free(hold);
+   		}
+   	free(dl);
+	return 0;
         default:
                 printf("Invalid option\n");
         }
@@ -197,12 +202,12 @@ int  main() {
     }
     printf("asdf");
     while (dl->head != NULL) {
-	  temp = dl->head;
+	  hold = dl->head;
 	  free(dl->head->artist);
 	  free(dl->head->title);
 	  free(dl->head->date);
           dl->head = dl->head->next;
-          free(temp);
+          free(hold);
     }
     free(dl);
     return 0;
