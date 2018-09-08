@@ -181,18 +181,19 @@ int  main() {
 		}
                 break;
         case 4:
-		//free
-                return 0;
+                return;
         default:
                 printf("Invalid option\n");
         }
       }
     }
+    printf("asdf");
     while (dl->head != NULL) {
 	  temp = dl->head;
 	  free(dl->head->artist);
 	  free(dl->head->title);
 	  free(dl->head->date);
+          dl->head = dl->head->next;
           free(temp);
     }
     free(dl);
