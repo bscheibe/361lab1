@@ -28,8 +28,8 @@ void add(char *artist, char *title, char *date, int runtime, dlist *dl) {
 // Deletes all nodes with the given artist's name
 int del(char *artist, dlist *dl) {
     int deletions = 0;
-    mp3 *temp = (mp3*)malloc(sizeof(mp3));
-    mp3 *deletion = (mp3*)malloc(sizeof(mp3));
+    mp3 *temp;
+    mp3 *deletion;
     temp = dl->head;
     while (temp != NULL) {
        if (!strcmp(temp->artist, artist)) {
@@ -195,5 +195,6 @@ int  main() {
 	  free(dl->head->date);
           free(temp);
     }
+    free(dl);
     return 0;
 }
