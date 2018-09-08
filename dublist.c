@@ -194,5 +194,6 @@ int  main() {
 	  free(dl->head->title);
 	  free(dl->head->date);
           free(temp);
+    }
     return 0;
 }
